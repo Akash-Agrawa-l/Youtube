@@ -7,6 +7,7 @@ import {navigationRef} from '../../../utils/common';
 import {normalize} from '../../../utils/dimensions';
 import fonts from '../../../utils/fonts';
 import {reactions} from '../../../utils/dummyData';
+import localimages from '../../../utils/localimages';
 
 const PlayerScreen = ({route}: any) => {
   const {StatusBarManager} = NativeModules;
@@ -56,6 +57,9 @@ const PlayerScreen = ({route}: any) => {
             );
           })}
         </View>
+      </View>
+      <View style={styles.channelDescriptionContainer}>
+        <Image source={localimages.PROFILEPIC} />
       </View>
     </View>
   );
@@ -107,5 +111,11 @@ const styles = StyleSheet.create({
     fontSize: normalize(11),
     fontFamily: fonts.MEDIUM,
     color: colors.LIGHTGREY,
+  },
+  channelDescriptionContainer: {
+    borderTopWidth: normalize(1),
+    borderBottomWidth: normalize(1),
+    borderColor: colors.BORDER,
+    padding: normalize(15),
   },
 });
