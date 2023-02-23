@@ -5,4 +5,4 @@ const HomeScreen = () => {
   return <TopTabs />;
 };
 
-export default HomeScreen;
+export default React.memo(HomeScreen);

@@ -65,16 +65,18 @@ const styles = StyleSheet.create({
   inactiveView: {
     backgroundColor: colors.WHITE,
     alignItems: 'center',
-    borderRadius: normalize(14),
+    justifyContent: 'center',
+    borderRadius: normalize(16),
     padding: normalize(15),
-    paddingVertical: normalize(3),
+    paddingVertical: normalize(5),
   },
   activeView: {
     backgroundColor: colors.CYAN,
     alignItems: 'center',
-    borderRadius: normalize(14),
+    justifyContent: 'center',
+    borderRadius: normalize(16),
     padding: normalize(15),
-    paddingVertical: normalize(3),
+    paddingVertical: normalize(5),
   },
   buttonStyle: {
     flex: 1,

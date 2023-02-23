@@ -11,6 +11,7 @@ const Tabs = createMaterialTopTabNavigator();
 const TopTabs = () => {
   return (
     <Tabs.Navigator
+      initialRouteName={screenNames.VIDEOS}
       tabBar={CustomTabBar}
       screenOptions={{
         swipeEnabled: false,
