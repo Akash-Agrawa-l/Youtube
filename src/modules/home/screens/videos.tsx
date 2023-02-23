@@ -1,5 +1,5 @@
 import {FlatList} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {mediaJSON} from '../../../utils/dummyData';
@@ -11,6 +11,13 @@ import screenNames from '../../../utils/screenNames';
 
 const Videos = () => {
   const insets = useSafeAreaInsets();
+  const [page, setPage] = React.useState(1);
+  const [data, getData] = React.useState<mediaJSONProps[] | []>([]);
+
+  useEffect(() => {
+    getData([...data, ...mediaJSON.slice(5 * (page - 1), 5 * page)]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   const renderCard = ({item}: {item: mediaJSONProps}) => {
     const navigateTo = () => {
@@ -34,12 +41,21 @@ const Videos = () => {
 
   const keyExtrat = (item: mediaJSONProps, index: number) => index.toString();
 
+  const onEndReached = () => {
+    if ((page - 1) * 5 <= data.length) {
+      setPage(page + 1);
+    }
+  };
+
   return (
     <FlatList
-      data={mediaJSON}
+      data={data}
       contentContainerStyle={{paddingBottom: normalize(insets.bottom)}}
       keyExtractor={keyExtrat}
       renderItem={renderCard}
+      bounces={false}
+      onEndReachedThreshold={0}
+      onEndReached={onEndReached}
     />
   );
 };
