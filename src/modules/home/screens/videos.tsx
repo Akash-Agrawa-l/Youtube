@@ -1,16 +1,25 @@
 import {FlatList} from 'react-native';
-import React, {useCallback} from 'react';
+import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {mediaJSON} from '../../../utils/dummyData';
 import {mediaJSONProps} from '../../../utils/modals';
 import {normalize} from '../../../utils/dimensions';
 import FeedCard from '../../../components/feedCard';
+import {navigationRef} from '../../../utils/common';
+import screenNames from '../../../utils/screenNames';
 
 const Videos = () => {
   const insets = useSafeAreaInsets();
 
   const renderCard = ({item}: {item: mediaJSONProps}) => {
+    const navigateTo = () => {
+      navigationRef.current.navigate(screenNames.PLAYER, {
+        id: item.id,
+        source: item.sources[0],
+      });
+    };
+
     return (
       <FeedCard
         title={item.title}
@@ -18,6 +27,7 @@ const Videos = () => {
         thumb={item.thumb}
         uploadedAt={item.uploadedAt}
         views={item.views}
+        onPress={navigateTo}
       />
     );
   };
@@ -34,4 +44,4 @@ const Videos = () => {
   );
 };
 
-export default Videos;
+export default React.memo(Videos);

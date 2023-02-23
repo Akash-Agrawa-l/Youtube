@@ -9,6 +9,7 @@ import screenNames from '../utils/screenNames';
 import localimages from '../utils/localimages';
 import HomeScreen from '../modules/home/screens';
 import {navigationRef} from '../utils/common';
+import PlayerScreen from '../modules/player/screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,13 +29,15 @@ const RootRouter = () => {
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerLeft: leftIcon,
+          headerShown: false,
           headerTitleStyle: styles.titleStyle,
         }}>
         <Stack.Screen
           name={screenNames.HOMESCREEN}
           component={HomeScreen}
-          options={{title: 'Favorites'}}
+          options={{title: 'Favorites', headerShown: true}}
         />
+        <Stack.Screen name={screenNames.PLAYER} component={PlayerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
