@@ -1,12 +1,14 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import screenNames from '../utils/screenNames';
-import HomeScreen from '../modules/home/screens';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import fonts from '../utils/fonts';
 import colors from '../utils/colors';
-import localimages from '../utils/localimages';
 import {normalize} from '../utils/dimensions';
+import screenNames from '../utils/screenNames';
+import localimages from '../utils/localimages';
+import HomeScreen from '../modules/home/screens';
+import {navigationRef} from '../utils/common';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,15 +22,19 @@ const leftIcon = () => {
 
 const RootRouter = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         screenOptions={{
           headerShadowVisible: false,
           headerTitleAlign: 'center',
-          headerTintColor: colors.BLACK,
           headerLeft: leftIcon,
+          headerTitleStyle: styles.titleStyle,
         }}>
-        <Stack.Screen name={screenNames.HOMESCREEN} component={HomeScreen} />
+        <Stack.Screen
+          name={screenNames.HOMESCREEN}
+          component={HomeScreen}
+          options={{title: 'Favorites'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -41,5 +47,9 @@ const styles = StyleSheet.create({
     width: normalize(18),
     height: normalize(18),
     resizeMode: 'contain',
+  },
+  titleStyle: {
+    color: colors.BLACK,
+    fontFamily: fonts.BOLD,
   },
 });
