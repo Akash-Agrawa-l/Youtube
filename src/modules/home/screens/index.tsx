@@ -1,14 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import TopTabs from '../../../router/topTabs';
 
 const HomeScreen = () => {
-  return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
-  );
+  return <TopTabs />;
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({});
