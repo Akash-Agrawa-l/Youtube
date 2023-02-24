@@ -25,6 +25,11 @@ const FeedCard = ({
           resizeMode={'cover'}
           style={styles.thumbImageStyle}
         />
+        <Image
+          source={localimages.PLAY}
+          style={styles.playIcon}
+          resizeMode={'center'}
+        />
       </View>
       <View style={styles.detailContainer}>
         <Text style={styles.titleStyle}>{title}</Text>
@@ -96,4 +101,5 @@ const styles = StyleSheet.create({
     color: colors.LIGHTGREY,
     fontSize: normalize(13),
   },
+  playIcon: {position: 'absolute', height: '100%', width: '100%'},
 });

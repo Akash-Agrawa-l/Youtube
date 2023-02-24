@@ -1,3 +1,5 @@
+import localimages from './localimages';
+
 export const mediaJSON = [
   {
     id: 1,
@@ -179,5 +181,28 @@ export const mediaJSON = [
     thumb:
       'https://storage.googleapis.com/gtv-videos-bucket/sample/images/SubaruOutbackOnStreetAndDirt.jpg',
     title: 'What care can you get for a grand?',
+  },
+];
+
+export const reactions = [
+  {
+    icon: localimages.LIKE,
+    text: 60,
+  },
+  {
+    icon: localimages.DISLIKE,
+    text: 50,
+  },
+  {
+    icon: localimages.SHARE,
+    text: 'Share',
+  },
+  {
+    icon: localimages.FAVORITE,
+    text: 'Favorite',
+  },
+  {
+    icon: localimages.DONATE,
+    text: 'Donate',
   },
 ];
