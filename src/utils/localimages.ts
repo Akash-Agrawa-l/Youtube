@@ -9,4 +9,7 @@ export default {
   SHARE: require(`${DEFAULTPATH}noun_Share_3304093.png`),
   FAVORITE: require(`${DEFAULTPATH}noun_Heart_2553737.png`),
   DONATE: require(`${DEFAULTPATH}money.png`),
+  EXPAND: require(`${DEFAULTPATH}ic_expand.png`),
+  FORWARD: require(`${DEFAULTPATH}Page-1.png`),
+  BACK: require(`${DEFAULTPATH}Page-1_2.png`),
 };

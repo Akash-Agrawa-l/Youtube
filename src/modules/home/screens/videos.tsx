@@ -22,7 +22,6 @@ const Videos = () => {
   const renderCard = ({item}: {item: mediaJSONProps}) => {
     const navigateTo = () => {
       navigationRef.current.navigate(screenNames.PLAYER, {
-        source: item.sources[0],
         data: item,
       });
     };
