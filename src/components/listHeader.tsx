@@ -14,8 +14,13 @@ const ListHeader = ({data}: {data: mediaJSONProps}) => {
     return reactions.map((item, index) => {
       const pressHandler = () => {
         if (item.text === 'Share') {
-          console.log('Share');
-          Share.open({title: data.title});
+          Share.open({title: data.title, url: data.sources[0]})
+            .then(resp => {
+              console.log('resp', resp);
+            })
+            .catch(err => {
+              console.log('err', err);
+            });
         }
       };
       return (
