@@ -30,6 +30,9 @@ const FeedCard = ({
           style={styles.playIcon}
           resizeMode={'center'}
         />
+        <View style={styles.timeStampContainer}>
+          <Text style={styles.timeStamp}>{'5:30'}</Text>
+        </View>
       </View>
       <View style={styles.detailContainer}>
         <Text style={styles.titleStyle}>{title}</Text>
@@ -102,4 +105,18 @@ const styles = StyleSheet.create({
     fontSize: normalize(13),
   },
   playIcon: {position: 'absolute', height: '100%', width: '100%'},
+  timeStampContainer: {
+    backgroundColor: colors.BLACK_50,
+    padding: normalize(8),
+    paddingVertical: normalize(4),
+    borderRadius: normalize(5),
+    position: 'absolute',
+    bottom: '4%',
+    right: '2%',
+  },
+  timeStamp: {
+    color: colors.WHITE,
+    fontFamily: fonts.MEDIUM,
+    fontSize: normalize(12),
+  },
 });

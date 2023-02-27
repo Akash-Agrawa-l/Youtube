@@ -10,6 +10,10 @@ export default {
   FAVORITE: require(`${DEFAULTPATH}noun_Heart_2553737.png`),
   DONATE: require(`${DEFAULTPATH}money.png`),
   EXPAND: require(`${DEFAULTPATH}ic_expand.png`),
-  FORWARD: require(`${DEFAULTPATH}Page-1.png`),
-  BACK: require(`${DEFAULTPATH}Page-1_2.png`),
+  FORWARD: require(`${DEFAULTPATH}Page-1_2.png`),
+  BACK: require(`${DEFAULTPATH}Page-1.png`),
+  MINIMIZE: require(`${DEFAULTPATH}minimize.png`),
+  PAUSE: require(`${DEFAULTPATH}pause.png`),
+  DOT: require(`${DEFAULTPATH}dot.png`),
+  LOADER: require('../assets/lottie/loader.json'),
 };
