@@ -5,4 +5,7 @@ export default {
   LIGHTGREY: '#8F8F8F',
   CYAN: '#50e3e1',
   BORDER: '#CFCFCF',
+  TRANSPARENT: '#00000000',
+  TRANSLUSCENT: '#00000033',
+  BLACK_50: '#00000080',
 };
