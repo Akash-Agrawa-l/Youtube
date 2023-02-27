@@ -27,9 +27,10 @@ const PlayerScreen = ({route}: any) => {
       if (orientation.includes('PORTRAIT')) {
         setStatusBarPadding({paddingTop: StatusBarManager?.HEIGHT});
       } else {
-        setStatusBarPadding(0);
+        setStatusBarPadding({paddingTop: 0});
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const keyExtrat = (item: mediaJSONProps, index: number) => index.toString();
