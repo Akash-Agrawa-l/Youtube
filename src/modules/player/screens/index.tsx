@@ -1,5 +1,5 @@
 import {StyleSheet, View, NativeModules, FlatList} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import colors from '../../../utils/colors';
 import {mediaJSONProps} from '../../../utils/modals';
 import {mediaJSON} from '../../../utils/dummyData';
@@ -18,6 +18,7 @@ const PlayerScreen = ({route}: any) => {
   const [statusBarPadding, setStatusBarPadding] = useState({
     paddingTop: StatusBarManager?.HEIGHT,
   });
+  const flatlistRef = useRef<any>().current;
   let media = mediaJSON
     .filter((item: mediaJSONProps) => item.id !== currentData.id)
     .splice(0, 5);
@@ -35,11 +36,15 @@ const PlayerScreen = ({route}: any) => {
 
   const keyExtrat = (item: mediaJSONProps, index: number) => index.toString();
 
-  const renderCard = ({item}: {item: mediaJSONProps}) => {
-    const onPress = () => {
-      setCurrentData(item);
-    };
+  const onPress = (item: mediaJSONProps) => {
+    flatlistRef?.current?.scrollToOffset({
+      animated: true,
+      offset: 0,
+    });
+    setCurrentData(item);
+  };
 
+  const renderCard = ({item}: {item: mediaJSONProps}) => {
     return (
       <FeedCard
         title={item.title}
@@ -47,7 +52,7 @@ const PlayerScreen = ({route}: any) => {
         thumb={item.thumb}
         uploadedAt={item.uploadedAt}
         views={item.views}
-        onPress={onPress}
+        onPress={() => onPress(item)}
       />
     );
   };
@@ -59,13 +64,14 @@ const PlayerScreen = ({route}: any) => {
   return (
     <View style={[styles.parentContainer, statusBarPadding]}>
       <VideoComponent source={currentData.sources[0]} />
-
       <FlatList
+        ref={flatlistRef}
         data={media}
         renderItem={renderCard}
         keyExtractor={keyExtrat}
         ListHeaderComponent={renderHeader}
-        contentContainerStyle={{paddingBottom: normalize(insets.bottom)}}
+        contentContainerStyle={{paddingBottom: normalize(insets.bottom + 10)}}
+        scrollsToTop={true}
         bounces={false}
         showsVerticalScrollIndicator={false}
       />
