@@ -1,5 +1,7 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+import Share from 'react-native-share';
+
 import {reactions} from '../utils/dummyData';
 import {normalize} from '../utils/dimensions';
 import fonts from '../utils/fonts';
@@ -8,6 +10,26 @@ import localimages from '../utils/localimages';
 import {mediaJSONProps} from '../utils/modals';
 
 const ListHeader = ({data}: {data: mediaJSONProps}) => {
+  const renderReactions = () => {
+    return reactions.map((item, index) => {
+      const pressHandler = () => {
+        if (item.text === 'Share') {
+          console.log('Share');
+          Share.open({title: data.title});
+        }
+      };
+      return (
+        <TouchableOpacity
+          activeOpacity={0.8}
+          key={index}
+          onPress={pressHandler}
+          style={styles.reacttionSubContainer}>
+          <Image source={item.icon} style={styles.reactionIcon} />
+          <Text style={styles.reactionText}>{item.text}</Text>
+        </TouchableOpacity>
+      );
+    });
+  };
   return (
     <React.Fragment>
       <View style={styles.detailsContainer}>
@@ -19,19 +41,7 @@ const ListHeader = ({data}: {data: mediaJSONProps}) => {
         <Text numberOfLines={3} style={styles.descriptionText}>
           {data?.description}
         </Text>
-        <View style={styles.reactionsParentContainer}>
-          {reactions.map((item, index) => {
-            return (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                key={index}
-                style={styles.reacttionSubContainer}>
-                <Image source={item.icon} style={styles.reactionIcon} />
-                <Text style={styles.reactionText}>{item.text}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        <View style={styles.reactionsParentContainer}>{renderReactions()}</View>
       </View>
       <View style={styles.channelDescriptionParentContainer}>
         <View style={styles.channelDescriptionView}>

@@ -53,14 +53,13 @@ const VideoComponent = ({source, controlsContainer = {}}: any) => {
 
   const isFullscreen = Object.keys(videoStyle).includes('position');
 
-  React.useEffect(() => {
-    setPaused(false);
-    return () => {
-      setPaused(true);
-    };
-  }, []);
+  const removeListeners = () => {
+    setPaused(true);
+    Orientation.removeLockListener(handleFullScreen);
+  };
 
   React.useEffect(() => {
+    setPaused(false);
     Orientation.addDeviceOrientationListener(orientation => {
       if (orientation.includes('PORTRAIT')) {
         setVideoStyle(protraitStyle);
@@ -69,9 +68,7 @@ const VideoComponent = ({source, controlsContainer = {}}: any) => {
         Orientation.unlockAllOrientations();
       }
     });
-    return () => {
-      Orientation.removeLockListener(handleFullScreen);
-    };
+    return removeListeners();
   }, []);
 
   const handleProgress = (progress: OnProgressData) => {
