@@ -1,10 +1,11 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {cardProps} from '../utils/modals';
 import {normalize} from '../utils/dimensions';
 import colors from '../utils/colors';
 import fonts from '../utils/fonts';
 import localimages from '../utils/localimages';
+import Shimmer from './shimmer';
 
 const FeedCard = ({
   title,
@@ -14,16 +15,28 @@ const FeedCard = ({
   views,
   onPress,
 }: cardProps) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const onLoadStart = () => {
+    setIsLoading(true);
+  };
+  const onLoadEnd = () => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3500);
+  };
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.9}
       style={styles.cardContainerStyle}>
-      <View>
+      <View style={styles.imageContainer}>
         <Image
           source={{uri: thumb}}
           resizeMode={'cover'}
           style={styles.thumbImageStyle}
+          onLoadStart={onLoadStart}
+          onLoadEnd={onLoadEnd}
         />
         <Image
           source={localimages.PLAY}
@@ -33,24 +46,50 @@ const FeedCard = ({
         <View style={styles.timeStampContainer}>
           <Text style={styles.timeStamp}>{'5:30'}</Text>
         </View>
+        {isLoading && <Shimmer />}
       </View>
       <View style={styles.detailContainer}>
-        <Text style={styles.titleStyle}>{title}</Text>
-        <Text
-          style={styles.viewStyle}>{`${views}  \u2022  ${uploadedAt}`}</Text>
+        {isLoading ? (
+          <View style={styles.titleshimmerContainer}>
+            <Shimmer />
+          </View>
+        ) : (
+          <Text style={styles.titleStyle}>{title}</Text>
+        )}
+        {isLoading ? (
+          <View style={styles.timeshimmerContainer}>
+            <Shimmer />
+          </View>
+        ) : (
+          <Text
+            style={styles.viewStyle}>{`${views}  \u2022  ${uploadedAt}`}</Text>
+        )}
+
         <View style={styles.userDetailContainer}>
-          <Image
-            source={localimages.PROFILEPIC}
-            style={styles.profilePicStyle}
-          />
-          <Text style={styles.profileNameText}>{subtitle}</Text>
+          <View style={styles.profilePicContainer}>
+            {isLoading ? (
+              <Shimmer />
+            ) : (
+              <Image
+                source={localimages.PROFILEPIC}
+                style={styles.profilePicStyle}
+              />
+            )}
+          </View>
+          {isLoading ? (
+            <View style={styles.timeshimmerContainer}>
+              <Shimmer />
+            </View>
+          ) : (
+            <Text style={styles.profileNameText}>{subtitle}</Text>
+          )}
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default FeedCard;
+export default React.memo(FeedCard);
 
 const styles = StyleSheet.create({
   cardContainerStyle: {
@@ -65,14 +104,18 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.18,
     shadowRadius: 3.84,
-
     elevation: 5,
+  },
+  imageContainer: {
+    width: '100%',
+    aspectRatio: 1 / 0.563,
+    overflow: 'hidden',
+    borderTopRightRadius: normalize(10),
+    borderTopLeftRadius: normalize(10),
   },
   thumbImageStyle: {
     width: '100%',
     aspectRatio: 1 / 0.563,
-    borderTopRightRadius: normalize(10),
-    borderTopLeftRadius: normalize(10),
   },
   detailContainer: {
     padding: normalize(15),
@@ -93,11 +136,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  profilePicStyle: {
+  profilePicContainer: {
     height: normalize(30),
     width: normalize(30),
     borderRadius: normalize(16),
     marginRight: normalize(10),
+    overflow: 'hidden',
+  },
+  profilePicStyle: {
+    height: '100%',
+    width: '100%',
   },
   profileNameText: {
     fontFamily: fonts.MEDIUM,
@@ -118,5 +166,18 @@ const styles = StyleSheet.create({
     color: colors.WHITE,
     fontFamily: fonts.MEDIUM,
     fontSize: normalize(12),
+  },
+  titleshimmerContainer: {
+    height: normalize(20),
+    width: '100%',
+    overflow: 'hidden',
+    borderRadius: normalize(5),
+  },
+  timeshimmerContainer: {
+    height: normalize(20),
+    width: '70%',
+    overflow: 'hidden',
+    borderRadius: normalize(5),
+    marginVertical: normalize(7),
   },
 });
