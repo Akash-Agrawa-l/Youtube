@@ -18,7 +18,7 @@ const PlayerScreen = ({route}: any) => {
   const [statusBarPadding, setStatusBarPadding] = useState({
     paddingTop: StatusBarManager?.HEIGHT,
   });
-  const flatlistRef = useRef<any>().current;
+  const flatlistRef = useRef<any>();
   let media = mediaJSON
     .filter((item: mediaJSONProps) => item.id !== currentData.id)
     .splice(0, 5);
