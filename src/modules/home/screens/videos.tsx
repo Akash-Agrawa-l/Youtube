@@ -55,6 +55,9 @@ const Videos = () => {
       bounces={false}
       onEndReachedThreshold={0}
       onEndReached={onEndReached}
+      showsVerticalScrollIndicator={false}
+      maxToRenderPerBatch={5}
+      windowSize={3}
     />
   );
 };

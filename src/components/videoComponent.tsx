@@ -34,7 +34,6 @@ const VideoComponent = ({source}: VideoProps) => {
   const [pause, setPaused] = useState(true);
   const [loading, setLoading] = useState(true);
   const [videoStyle, setVideoStyle] = useState<ViewStyle>(styles.protraitStyle);
-  const animatedOpacity = useState(new Animated.Value(1))[0];
 
   const isFullscreen = Object.keys(videoStyle).includes('position');
 
@@ -50,24 +49,6 @@ const VideoComponent = ({source}: VideoProps) => {
     });
     return removeListeners;
   }, []);
-
-  React.useEffect(() => {
-    if (!pause) {
-      Animated.timing(animatedOpacity, {
-        toValue: 0,
-        delay: 3000,
-        duration: 3000,
-        useNativeDriver: true,
-      }).start(({finished}) => {
-        if (finished) {
-          console.log('finished');
-          animatedOpacity.setValue(0);
-        }
-      });
-    }
-  }, [pause]);
-
-  // console.log('animatedOpacity', animatedOpacity);
 
   const removeListeners = () => {
     setPaused(true);
@@ -163,13 +144,7 @@ const VideoComponent = ({source}: VideoProps) => {
         playInBackground={false}
         playWhenInactive={false}
       />
-      <AnimatedButton
-        style={[styles.controlContainer, {opacity: animatedOpacity}]}
-        onPress={() => {
-          animatedOpacity.setValue(1);
-          animatedOpacity.resetAnimation();
-        }}
-        activeOpacity={1}>
+      <AnimatedButton style={styles.controlContainer} activeOpacity={1}>
         {loading ? (
           <AnimatedLottieView
             source={localimages.LOADER}
