@@ -23,14 +23,13 @@ const Videos = () => {
 
   const viewabilityConfig = {
     waitForInteraction: true,
-    viewAreaCoveragePercentThreshold: 50,
+    viewAreaCoveragePercentThreshold: 100,
+    minimumViewTime: 2500,
   };
 
   const onViewableItemsChanged = useCallback(
     ({viewableItems}: {viewableItems: Array<ViewToken>}) => {
-      setTimeout(() => {
-        setCurrentIndex(viewableItems[0]?.index);
-      }, 1000);
+      setCurrentIndex(viewableItems[0]?.index);
     },
     [],
   );
