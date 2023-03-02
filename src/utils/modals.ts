@@ -2,27 +2,27 @@ import {ImageSourcePropType} from 'react-native';
 
 export interface mediaJSONProps {
   id: number;
-  uploadedAt: string;
-  views: string;
-  description: string;
-  sources: string[];
-  subtitle: string;
   thumb: string;
   title: string;
+  views: string;
+  subtitle: string;
   duration: string;
+  sources: string[];
+  uploadedAt: string;
+  description: string;
 }
 
 export interface cardProps {
-  index?: number;
   title: string;
-  subtitle: string;
   thumb: string;
-  uploadedAt: string;
-  source?: string;
-  currentIndex?: number | null;
   views: string;
+  index?: number;
+  source?: string;
+  subtitle: string;
   duration: string;
+  uploadedAt: string;
   onPress?: () => void;
+  currentIndex?: number | null;
 }
 
 export interface VideoProps {
@@ -30,16 +30,16 @@ export interface VideoProps {
 }
 
 export interface controlProps {
-  handleBack: () => void;
-  handlerewind: () => void;
-  handlePause: () => void;
-  handleForward: () => void;
-  handleSeek: (value: number) => void;
-  handleCurrentTime: (value: number) => void;
-  handleFullScreen: () => void;
-  timeStamp: string;
   duration: number;
+  timeStamp: string;
   currenttime: number;
   isFullscreen: boolean;
+  handleBack: () => void;
+  handlePause: () => void;
+  handlerewind: () => void;
+  handleForward: () => void;
+  handleFullScreen: () => void;
   pauseIcon: ImageSourcePropType;
+  handleSeek: (value: number) => void;
+  handleCurrentTime: (value: number) => void;
 }

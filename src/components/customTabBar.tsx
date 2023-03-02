@@ -1,8 +1,9 @@
-import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
 import React from 'react';
+import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
+
+import fonts from '../utils/fonts';
 import colors from '../utils/colors';
 import {normalize} from '../utils/dimensions';
-import fonts from '../utils/fonts';
 
 const CustomTabBar = ({state, descriptors, navigation}: any) => {
   return (

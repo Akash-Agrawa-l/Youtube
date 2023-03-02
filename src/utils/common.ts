@@ -2,6 +2,7 @@ import React from 'react';
 
 export const navigationRef = React.createRef<any>();
 export const vidRef = React.createRef<any>();
+export const playRef = React.createRef<any>();
 
 export const formatTime = (time: number) => {
   const minutes = time >= 60 ? Math.floor(time / 60) : 0;

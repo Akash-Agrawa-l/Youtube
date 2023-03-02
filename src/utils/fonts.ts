@@ -1,11 +1,11 @@
 export default {
-  BLACK: 'Poppins-Black',
+  THIN: 'Poppins-Thin',
   BOLD: 'Poppins-Bold',
-  EXTRABOLD: 'Poppins-ExtraBold',
-  EXTRALIGHT: 'Poppins-ExtraLight',
+  BLACK: 'Poppins-Black',
   LIGHT: 'Poppins-Light',
   MEDIUM: 'Poppins-Medium',
   REGULAR: 'Poppins-Regular',
   SEMIBOLD: 'Poppins-SemiBold',
-  THIN: 'Poppins-Thin',
+  EXTRABOLD: 'Poppins-ExtraBold',
+  EXTRALIGHT: 'Poppins-ExtraLight',
 };

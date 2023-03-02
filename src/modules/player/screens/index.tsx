@@ -12,11 +12,11 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import colors from '../../../utils/colors';
-import {mediaJSONProps} from '../../../utils/modals';
 import {mediaJSON} from '../../../utils/dummyData';
-import ListHeader from '../../../components/listHeader';
 import FeedCard from '../../../components/feedCard';
 import {normalize} from '../../../utils/dimensions';
+import {mediaJSONProps} from '../../../utils/modals';
+import ListHeader from '../../../components/listHeader';
 import VideoComponent from '../../../components/videoComponent';
 
 const {StatusBarManager} = NativeModules;

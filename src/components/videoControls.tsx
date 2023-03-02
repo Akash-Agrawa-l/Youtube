@@ -9,11 +9,11 @@ import {
 import React, {useEffect} from 'react';
 import Slider from '@react-native-community/slider';
 
-import localimages from '../utils/localimages';
-import colors from '../utils/colors';
-import {normalize} from '../utils/dimensions';
 import fonts from '../utils/fonts';
+import colors from '../utils/colors';
 import {controlProps} from '../utils/modals';
+import {normalize} from '../utils/dimensions';
+import localimages from '../utils/localimages';
 
 const VideoControls = ({
   duration,
@@ -166,13 +166,13 @@ const styles = StyleSheet.create({
     height: normalize(35),
   },
   rewindButton: {
-    height: '100%',
+    height: '80%',
     aspectRatio: 1 / 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   forwardButton: {
-    height: '100%',
+    height: '80%',
     aspectRatio: 1 / 1,
     alignItems: 'center',
     justifyContent: 'center',

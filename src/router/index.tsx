@@ -1,15 +1,16 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {Image, StatusBar, StyleSheet, TouchableOpacity} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Image, StatusBar, StyleSheet, TouchableOpacity} from 'react-native';
+
+import topTabs from './topTabs';
 import fonts from '../utils/fonts';
 import colors from '../utils/colors';
+import {navigationRef} from '../utils/common';
 import {normalize} from '../utils/dimensions';
 import screenNames from '../utils/screenNames';
 import localimages from '../utils/localimages';
-import {navigationRef} from '../utils/common';
 import PlayerScreen from '../modules/player/screens';
-import topTabs from './topTabs';
 
 const Stack = createNativeStackNavigator();
 
