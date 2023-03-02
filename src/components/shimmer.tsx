@@ -1,7 +1,8 @@
-import {StyleSheet} from 'react-native';
 import React from 'react';
-import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
+import {StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {createShimmerPlaceholder} from 'react-native-shimmer-placeholder';
+
 import colors from '../utils/colors';
 import {screenHeight, screenWidth} from '../utils/dimensions';
 

@@ -9,11 +9,12 @@ import Shimmer from './shimmer';
 
 const FeedCard = ({
   title,
-  subtitle,
   thumb,
-  uploadedAt,
   views,
   onPress,
+  subtitle,
+  duration,
+  uploadedAt,
 }: cardProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,7 +45,7 @@ const FeedCard = ({
           resizeMode={'center'}
         />
         <View style={styles.timeStampContainer}>
-          <Text style={styles.timeStamp}>{'5:30'}</Text>
+          <Text style={styles.timeStamp}>{duration}</Text>
         </View>
         {isLoading && <Shimmer />}
       </View>

@@ -15,7 +15,7 @@ const Videos = () => {
   const [data, getData] = React.useState<mediaJSONProps[] | []>([]);
 
   useEffect(() => {
-    getData([...data, ...mediaJSON.slice(5 * (page - 1), 5 * page)]);
+    getData([...data, ...mediaJSON.slice(3 * (page - 1), 3 * page)]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
@@ -33,6 +33,7 @@ const Videos = () => {
         thumb={item.thumb}
         uploadedAt={item.uploadedAt}
         views={item.views}
+        duration={item.duration}
         onPress={navigateTo}
       />
     );
@@ -41,7 +42,7 @@ const Videos = () => {
   const keyExtrat = (item: mediaJSONProps, index: number) => index.toString();
 
   const onEndReached = () => {
-    if ((page - 1) * 5 <= data.length) {
+    if ((page - 1) * 3 <= data.length) {
       setPage(page + 1);
     }
   };
@@ -53,10 +54,10 @@ const Videos = () => {
       keyExtractor={keyExtrat}
       renderItem={renderCard}
       bounces={false}
-      onEndReachedThreshold={0}
+      onEndReachedThreshold={0.3}
       onEndReached={onEndReached}
       showsVerticalScrollIndicator={false}
-      maxToRenderPerBatch={5}
+      maxToRenderPerBatch={3}
       windowSize={3}
     />
   );
