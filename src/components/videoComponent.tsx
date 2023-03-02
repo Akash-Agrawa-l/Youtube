@@ -132,6 +132,7 @@ const VideoComponent = ({source}: VideoProps) => {
   const handleCurrentTime = useCallback(
     (value: number) => {
       setCurrenttime(value);
+      setPaused(false);
     },
     [currenttime],
   );
@@ -180,6 +181,7 @@ const VideoComponent = ({source}: VideoProps) => {
    */
   const handleSeek = (value: number) => {
     vidRef?.current?.seek(value);
+    setPaused(false);
   };
 
   /**
