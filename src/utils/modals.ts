@@ -13,10 +13,13 @@ export interface mediaJSONProps {
 }
 
 export interface cardProps {
+  index?: number;
   title: string;
   subtitle: string;
   thumb: string;
   uploadedAt: string;
+  source?: string;
+  currentIndex?: number | null;
   views: string;
   duration: string;
   onPress?: () => void;

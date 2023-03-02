@@ -6,15 +6,19 @@ import colors from '../utils/colors';
 import fonts from '../utils/fonts';
 import localimages from '../utils/localimages';
 import Shimmer from './shimmer';
+import Video from 'react-native-video';
 
 const FeedCard = ({
   title,
   thumb,
   views,
+  index,
+  source,
   onPress,
   subtitle,
   duration,
   uploadedAt,
+  currentIndex,
 }: cardProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,6 +36,14 @@ const FeedCard = ({
       activeOpacity={0.9}
       style={styles.cardContainerStyle}>
       <View style={styles.imageContainer}>
+        {currentIndex === index && (
+          <Video
+            source={{uri: source}}
+            style={styles.videoStyle}
+            resizeMode={'contain'}
+            muted={true}
+          />
+        )}
         <Image
           source={{uri: thumb}}
           resizeMode={'cover'}
@@ -117,6 +129,14 @@ const styles = StyleSheet.create({
   thumbImageStyle: {
     width: '100%',
     aspectRatio: 1 / 0.563,
+  },
+  videoStyle: {
+    width: '100%',
+    aspectRatio: 1 / 0.563,
+    position: 'absolute',
+    zIndex: 3,
+    elevation: 3,
+    backgroundColor: colors.BLACK,
   },
   detailContainer: {
     padding: normalize(15),

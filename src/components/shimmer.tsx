@@ -29,5 +29,8 @@ export default React.memo(Shimmer);
 const styles = StyleSheet.create({
   shimmerStyle: {
     position: 'absolute',
+    zIndex: 10,
+    elevation: 10,
+    shadowColor: colors.TRANSPARENT,
   },
 });
