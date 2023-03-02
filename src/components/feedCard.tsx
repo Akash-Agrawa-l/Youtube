@@ -1,12 +1,15 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
+import Video from 'react-native-video';
+import {useIsFocused} from '@react-navigation/native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
+import Shimmer from './shimmer';
+import fonts from '../utils/fonts';
+import colors from '../utils/colors';
+import {playRef} from '../utils/common';
 import {cardProps} from '../utils/modals';
 import {normalize} from '../utils/dimensions';
-import colors from '../utils/colors';
-import fonts from '../utils/fonts';
 import localimages from '../utils/localimages';
-import Shimmer from './shimmer';
-import Video from 'react-native-video';
 
 const FeedCard = ({
   title,
@@ -21,6 +24,11 @@ const FeedCard = ({
   currentIndex,
 }: cardProps) => {
   const [isLoading, setIsLoading] = useState(true);
+  const isFocused = useIsFocused();
+
+  React.useEffect(() => {
+    isFocused && playRef?.current?.seek(0);
+  }, [isFocused]);
 
   const onLoadStart = () => {
     setIsLoading(true);
@@ -38,6 +46,7 @@ const FeedCard = ({
       <View style={styles.imageContainer}>
         {currentIndex === index && source && (
           <Video
+            ref={playRef}
             source={{uri: source}}
             style={styles.videoStyle}
             resizeMode={'contain'}

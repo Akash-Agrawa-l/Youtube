@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {Platform, StyleSheet, View, ViewStyle} from 'react-native';
-import React, {useCallback, useState} from 'react';
 import Video, {
   OnBufferData,
   OnLoadData,
@@ -8,14 +6,16 @@ import Video, {
 } from 'react-native-video';
 import AnimatedLottieView from 'lottie-react-native';
 import Orientation from 'react-native-orientation-locker';
+import React, {useCallback, useMemo, useState} from 'react';
+import {Platform, StyleSheet, View, ViewStyle} from 'react-native';
 
-import {screenWidth, screenHeight, normalize} from '../utils/dimensions';
-import colors from '../utils/colors';
-import localimages from '../utils/localimages';
-import {formatTime, navigationRef, vidRef} from '../utils/common';
 import fonts from '../utils/fonts';
+import colors from '../utils/colors';
 import {VideoProps} from '../utils/modals';
 import VideoControls from './videoControls';
+import localimages from '../utils/localimages';
+import {formatTime, navigationRef, vidRef} from '../utils/common';
+import {screenWidth, screenHeight, normalize} from '../utils/dimensions';
 
 const VideoComponent = ({source}: VideoProps) => {
   const [pause, setPaused] = useState<boolean>(false);
@@ -28,18 +28,21 @@ const VideoComponent = ({source}: VideoProps) => {
    * @isFullscreen Function
    * @description returns boolean
    */
-  const isFullscreen = Object.keys(videoStyle).includes('position');
+  const isFullscreen = useMemo(() => {
+    return Object.keys(videoStyle)?.includes('position');
+  }, [videoStyle]);
 
   /**
    * @pauseIcon Function
    * @description returns the required icon
    */
-  const pauseIcon =
-    currenttime !== duration
+  const pauseIcon = useMemo(() => {
+    return currenttime !== duration
       ? pause
         ? localimages.PLAY
         : localimages.PAUSE
       : localimages.REPLAY;
+  }, [pause, currenttime, duration]);
 
   /**
    * @ComponentDidMount Function
@@ -80,9 +83,9 @@ const VideoComponent = ({source}: VideoProps) => {
   const handleProgress = useCallback(
     (progress: OnProgressData) => {
       if (Math.floor(progress.currentTime) !== currenttime) {
-        setCurrenttime(Math.floor(progress.currentTime));
+        setCurrenttime(Math.floor(progress?.currentTime));
       }
-      if (Math.floor(progress.currentTime) === duration && duration !== 0) {
+      if (Math.floor(progress?.currentTime) === duration && duration !== 0) {
         setPaused(true);
       }
     },
@@ -97,8 +100,8 @@ const VideoComponent = ({source}: VideoProps) => {
     (data: OnLoadData) => {
       setLoading(false);
       setPaused(false);
-      setCurrenttime(data.currentTime);
-      setDuration(Math.floor(data.duration));
+      setCurrenttime(data?.currentTime);
+      setDuration(Math.floor(data?.duration));
     },
     [loading, pause, currenttime, duration],
   );
@@ -118,8 +121,8 @@ const VideoComponent = ({source}: VideoProps) => {
    */
   const onBuffer = useCallback(
     (data: OnBufferData) => {
-      if (loading !== data.isBuffering) {
-        setLoading(data.isBuffering);
+      if (loading !== data?.isBuffering) {
+        setLoading(data?.isBuffering);
       }
     },
     [loading],

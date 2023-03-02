@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import screenNames from '../utils/screenNames';
-import Channels from '../modules/home/screens/channels';
-import Videos from '../modules/home/screens/videos';
-import Articles from '../modules/home/screens/articles';
-import CustomTabBar from '../components/customTabBar';
 import Orientation from 'react-native-orientation-locker';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+
+import screenNames from '../utils/screenNames';
+import Videos from '../modules/home/screens/videos';
+import CustomTabBar from '../components/customTabBar';
+import Articles from '../modules/home/screens/articles';
+import Channels from '../modules/home/screens/channels';
 
 const Tabs = createMaterialTopTabNavigator();
 

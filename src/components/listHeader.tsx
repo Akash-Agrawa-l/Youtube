@@ -1,11 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Share from 'react-native-share';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-import {reactions} from '../utils/dummyData';
-import {normalize} from '../utils/dimensions';
 import fonts from '../utils/fonts';
 import colors from '../utils/colors';
+import {reactions} from '../utils/dummyData';
+import {normalize} from '../utils/dimensions';
 import localimages from '../utils/localimages';
 import {mediaJSONProps} from '../utils/modals';
 

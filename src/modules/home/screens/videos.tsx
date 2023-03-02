@@ -3,17 +3,23 @@ import React, {useCallback, useEffect} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {mediaJSON} from '../../../utils/dummyData';
-import {mediaJSONProps} from '../../../utils/modals';
 import {normalize} from '../../../utils/dimensions';
 import FeedCard from '../../../components/feedCard';
 import {navigationRef} from '../../../utils/common';
+import {mediaJSONProps} from '../../../utils/modals';
 import screenNames from '../../../utils/screenNames';
 
 const Videos = () => {
   const insets = useSafeAreaInsets();
   const [page, setPage] = React.useState(1);
   const [data, getData] = React.useState<mediaJSONProps[] | []>([]);
-  const [currentIndex, setCurrentIndex] = React.useState<number | null>(0);
+  const [currentIndex, setCurrentIndex] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setCurrentIndex(0);
+    }, 6000);
+  }, []);
 
   const viewabilityConfig = {
     waitForInteraction: true,
@@ -22,7 +28,9 @@ const Videos = () => {
 
   const onViewableItemsChanged = useCallback(
     ({viewableItems}: {viewableItems: Array<ViewToken>}) => {
-      setCurrentIndex(viewableItems[0]?.index);
+      setTimeout(() => {
+        setCurrentIndex(viewableItems[0]?.index);
+      }, 1000);
     },
     [],
   );
