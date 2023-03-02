@@ -1,46 +1,53 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Animated,
-  Image,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {Platform, StyleSheet, View, ViewStyle} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import Video, {
   OnBufferData,
   OnLoadData,
   OnProgressData,
 } from 'react-native-video';
+import AnimatedLottieView from 'lottie-react-native';
+import Orientation from 'react-native-orientation-locker';
+
 import {screenWidth, screenHeight, normalize} from '../utils/dimensions';
 import colors from '../utils/colors';
 import localimages from '../utils/localimages';
-import Slider from '@react-native-community/slider';
 import {formatTime, navigationRef, vidRef} from '../utils/common';
 import fonts from '../utils/fonts';
-import AnimatedLottieView from 'lottie-react-native';
-// import VideoControls from './videoControls';
-import Orientation from 'react-native-orientation-locker';
 import {VideoProps} from '../utils/modals';
-
-const AnimatedButton = Animated.createAnimatedComponent(TouchableOpacity);
+import VideoControls from './videoControls';
 
 const VideoComponent = ({source}: VideoProps) => {
-  const [currenttime, setCurrenttime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [pause, setPaused] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [pause, setPaused] = useState<boolean>(false);
+  const [duration, setDuration] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [currenttime, setCurrenttime] = useState<number>(0);
   const [videoStyle, setVideoStyle] = useState<ViewStyle>(styles.protraitStyle);
 
+  /**
+   * @isFullscreen Function
+   * @description returns boolean
+   */
   const isFullscreen = Object.keys(videoStyle).includes('position');
 
+  /**
+   * @pauseIcon Function
+   * @description returns the required icon
+   */
+  const pauseIcon =
+    currenttime !== duration
+      ? pause
+        ? localimages.PLAY
+        : localimages.PAUSE
+      : localimages.REPLAY;
+
+  /**
+   * @ComponentDidMount Function
+   * @description add Orientation listeners
+   */
   React.useEffect(() => {
-    setPaused(false);
     Orientation.addDeviceOrientationListener(orientation => {
-      if (orientation.includes('PORTRAIT')) {
+      if (orientation === 'PORTRAIT') {
         setVideoStyle(styles.protraitStyle);
       } else {
         setVideoStyle(styles.fullscreenStyle);
@@ -50,32 +57,63 @@ const VideoComponent = ({source}: VideoProps) => {
     return removeListeners;
   }, []);
 
+  /**
+   * @removeListeners Function
+   * @description removes added listeners
+   */
   const removeListeners = () => {
     setPaused(true);
     Orientation.lockToPortrait();
+    Orientation.removeDeviceOrientationListener(orientation => {
+      if (orientation === 'PORTRAIT') {
+        setVideoStyle(styles.protraitStyle);
+      }
+    });
   };
 
+  /**
+   * @handleProgress Function
+   * @description updates the current time of the video
+   */
   const handleProgress = useCallback(
     (progress: OnProgressData) => {
       if (Math.floor(progress.currentTime) !== currenttime) {
         setCurrenttime(Math.floor(progress.currentTime));
       }
+      if (Math.floor(progress.currentTime) === duration && duration !== 0) {
+        setPaused(true);
+      }
     },
     [currenttime],
   );
+
+  /**
+   * @onLoad Function
+   * @description returns total duration of video and toggles loading state to false
+   */
   const onLoad = useCallback(
     (data: OnLoadData) => {
       setLoading(false);
       setPaused(false);
       setCurrenttime(data.currentTime);
-      setDuration(data.duration);
+      setDuration(Math.floor(data.duration));
     },
     [loading, pause, currenttime, duration],
   );
+
+  /**
+   * @onLoadStart Function
+   * @description toggles loading state to true
+   */
   const onLoadStart = useCallback(() => {
     setLoading(true);
     setPaused(true);
   }, [loading, pause]);
+
+  /**
+   * @onBuffer Function
+   * @description toggles loading state
+   */
   const onBuffer = useCallback(
     (data: OnBufferData) => {
       if (loading !== data.isBuffering) {
@@ -85,6 +123,10 @@ const VideoComponent = ({source}: VideoProps) => {
     [loading],
   );
 
+  /**
+   * @handleCurrentTime Function
+   * @description updates currentTime state
+   */
   const handleCurrentTime = useCallback(
     (value: number) => {
       setCurrenttime(value);
@@ -92,27 +134,64 @@ const VideoComponent = ({source}: VideoProps) => {
     [currenttime],
   );
 
+  /**
+   * @handlePause Function
+   * @description for replaying video or pause/play video
+   */
   const handlePause = useCallback(() => {
-    setPaused(!pause);
+    if (currenttime !== duration) {
+      setPaused(!pause);
+    } else {
+      setCurrenttime(0);
+      vidRef?.current?.seek(0);
+      setPaused(false);
+    }
   }, [pause]);
+
+  /**
+   * @handleForward Function
+   * @description to forward 10 seconds
+   */
   const handleForward = () => {
     vidRef?.current?.seek(currenttime + 10);
   };
+
+  /**
+   * @handlerewind Function
+   * @description to rewind 10 seconds
+   */
   const handlerewind = () => {
     vidRef?.current?.seek(currenttime - 10);
   };
+
+  /**
+   * @getTime Function
+   * @description returns time in hh/mm/ss and current Time / total duration format
+   */
   const getTime = useCallback(() => {
     return `${formatTime(currenttime)}/${formatTime(duration)}`;
   }, [currenttime]);
 
+  /**
+   * @handleSeek Function
+   * @description to seek video using seekbar
+   */
   const handleSeek = (value: number) => {
     vidRef?.current?.seek(value);
   };
 
+  /**
+   * @handleBack Function
+   * @description on Back icon press
+   */
   const handleBack = () => {
-    navigationRef.current.goBack();
+    navigationRef?.current?.goBack();
   };
 
+  /**
+   * @handleFullScreen Function
+   * @description toggle fullscreen view
+   */
   const handleFullScreen = useCallback(() => {
     if (isFullscreen) {
       Orientation.unlockAllOrientations();
@@ -144,84 +223,31 @@ const VideoComponent = ({source}: VideoProps) => {
         playInBackground={false}
         playWhenInactive={false}
       />
-      <AnimatedButton style={styles.controlContainer} activeOpacity={1}>
-        {loading ? (
-          <AnimatedLottieView
-            source={localimages.LOADER}
-            style={styles.loaderStyle}
-            autoSize={true}
-            autoPlay
-            loop
-          />
-        ) : (
-          <React.Fragment>
-            <TouchableOpacity
-              style={styles.backButton}
-              activeOpacity={0.8}
-              onPress={handleBack}>
-              <Image source={localimages.BACKARROW} style={styles.backIcon} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.menuButton} activeOpacity={0.8}>
-              <Image source={localimages.MENU} style={styles.backIcon} />
-            </TouchableOpacity>
-            <View style={styles.centerControls}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={handlerewind}
-                style={styles.rewindButton}>
-                <Image source={localimages.BACK} style={styles.playIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={handlePause}
-                style={styles.playButton}>
-                <Image
-                  source={pause ? localimages.PLAY : localimages.PAUSE}
-                  style={styles.playIcon}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={handleForward}
-                style={styles.forwardButton}>
-                <Image source={localimages.FORWARD} style={styles.playIcon} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.bottomDetails}>
-              <Slider
-                style={styles.seekbar}
-                value={currenttime}
-                minimumValue={0}
-                maximumValue={duration}
-                minimumTrackTintColor={colors.CYAN}
-                maximumTrackTintColor={colors.TRANSLUSCENT}
-                tapToSeek={true}
-                thumbImage={localimages.DOT}
-                step={1}
-                onValueChange={handleSeek}
-                onSlidingComplete={handleCurrentTime}
-              />
-              <View style={styles.bottomDetailsRow}>
-                <Text style={styles.timeStamp}>{getTime()}</Text>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.fullscreenButton}
-                  onPress={handleFullScreen}>
-                  <Image
-                    source={
-                      isFullscreen
-                        ? localimages.MINIMIZE
-                        : localimages.FULLSCREEN
-                    }
-                    style={styles.fullscreenIcon}
-                    resizeMode={'contain'}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </React.Fragment>
-        )}
-      </AnimatedButton>
+      {loading ? (
+        <AnimatedLottieView
+          source={localimages.LOADER}
+          style={styles.loaderStyle}
+          resizeMode={'contain'}
+          autoSize={true}
+          autoPlay
+          loop
+        />
+      ) : (
+        <VideoControls
+          handleBack={handleBack}
+          handlerewind={handlerewind}
+          handlePause={handlePause}
+          handleForward={handleForward}
+          handleSeek={handleSeek}
+          handleCurrentTime={handleCurrentTime}
+          handleFullScreen={handleFullScreen}
+          timeStamp={getTime()}
+          duration={duration}
+          currenttime={currenttime}
+          isFullscreen={isFullscreen}
+          pauseIcon={pauseIcon}
+        />
+      )}
     </View>
   );
 };
@@ -306,8 +332,9 @@ const styles = StyleSheet.create({
   },
   loaderStyle: {
     position: 'absolute',
-    height: normalize(110),
-    width: normalize(110),
+    alignSelf: 'center',
+    height: normalize(99),
+    width: normalize(99),
     zIndex: 5,
   },
   fullscreenButton: {
@@ -343,6 +370,7 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 1 / 0.557,
     backgroundColor: colors.BLACK,
+    justifyContent: 'center',
   },
   fullscreenStyle: {
     height: screenWidth,
@@ -352,5 +380,6 @@ const styles = StyleSheet.create({
     zIndex: 10,
     elevation: 10,
     shadowColor: colors.TRANSPARENT,
+    justifyContent: 'center',
   },
 });

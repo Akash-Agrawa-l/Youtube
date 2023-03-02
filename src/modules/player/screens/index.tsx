@@ -1,68 +1,81 @@
-import {StyleSheet, View, NativeModules, FlatList} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  NativeModules,
+  FlatList,
+  ViewStyle,
+  StatusBar,
+} from 'react-native';
+import {useRoute} from '@react-navigation/native';
+import Orientation from 'react-native-orientation-locker';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+
 import colors from '../../../utils/colors';
 import {mediaJSONProps} from '../../../utils/modals';
 import {mediaJSON} from '../../../utils/dummyData';
 import ListHeader from '../../../components/listHeader';
 import FeedCard from '../../../components/feedCard';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {normalize} from '../../../utils/dimensions';
 import VideoComponent from '../../../components/videoComponent';
-import Orientation from 'react-native-orientation-locker';
 
-const PlayerScreen = ({route}: any) => {
-  const {StatusBarManager} = NativeModules;
+const {StatusBarManager} = NativeModules;
+
+const PlayerScreen = () => {
   const insets = useSafeAreaInsets();
-  const {data}: {data: mediaJSONProps} = route?.params;
-  const [currentData, setCurrentData] = useState(data);
-  const [statusBarPadding, setStatusBarPadding] = useState({
-    paddingTop: StatusBarManager?.HEIGHT,
-  });
+  const route: any = useRoute();
+  const {data}: {data: mediaJSONProps} = route.params;
+  const [currentData, setCurrentData] = useState<mediaJSONProps>(data);
+  const [statusBarPadding, setStatusBarPadding] = useState<ViewStyle>(
+    styles.statusBarPadding,
+  );
   const flatlistRef = useRef<any>();
-  let media = mediaJSON
+  let media: mediaJSONProps[] = mediaJSON
     .filter((item: mediaJSONProps) => item.id !== currentData.id)
     .splice(0, 5);
 
+  const isFullscreen: boolean = statusBarPadding === styles.noPadding;
+
   useEffect(() => {
     Orientation.addDeviceOrientationListener(orientation => {
-      if (orientation.includes('PORTRAIT')) {
-        setStatusBarPadding({paddingTop: StatusBarManager?.HEIGHT});
+      if (orientation === 'PORTRAIT') {
+        setStatusBarPadding(styles.statusBarPadding);
       } else {
-        setStatusBarPadding({paddingTop: 0});
+        setStatusBarPadding(styles.noPadding);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const keyExtrat = (item: mediaJSONProps, index: number) => index.toString();
 
-  const onPress = (item: mediaJSONProps) => {
-    flatlistRef?.current?.scrollToOffset({
-      animated: true,
-      offset: 0,
-    });
-    setCurrentData(item);
-  };
-
   const renderCard = ({item}: {item: mediaJSONProps}) => {
+    const onPress = () => {
+      flatlistRef?.current?.scrollToOffset({
+        animated: true,
+        offset: 0,
+      });
+      setCurrentData(item);
+    };
     return (
       <FeedCard
         title={item.title}
         subtitle={item.subtitle}
         thumb={item.thumb}
+        duration={item.duration}
         uploadedAt={item.uploadedAt}
         views={item.views}
-        onPress={() => onPress(item)}
+        onPress={onPress}
       />
     );
   };
 
-  const renderHeader = () => {
+  const renderHeader = useCallback(() => {
     return <ListHeader data={currentData} />;
-  };
+  }, [currentData]);
 
   return (
     <View style={[styles.parentContainer, statusBarPadding]}>
+      {isFullscreen && <StatusBar hidden barStyle={'light-content'} />}
       <VideoComponent source={currentData.sources[0]} />
       <FlatList
         ref={flatlistRef}
@@ -85,5 +98,11 @@ const styles = StyleSheet.create({
   parentContainer: {
     backgroundColor: colors.WHITE,
     flex: 1,
+  },
+  statusBarPadding: {
+    paddingTop: StatusBarManager?.HEIGHT,
+  },
+  noPadding: {
+    paddingTop: 0,
   },
 });

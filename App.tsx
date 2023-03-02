@@ -5,4 +5,4 @@ const App = () => {
   return <RootRouter />;
 };
 
-export default App;
+export default React.memo(App);

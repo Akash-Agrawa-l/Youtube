@@ -9,4 +9,4 @@ const Channels = () => {
   );
 };
 
-export default Channels;
+export default React.memo(Channels);

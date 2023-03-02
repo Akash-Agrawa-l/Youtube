@@ -17,4 +17,5 @@ export default {
   DOT: require(`${DEFAULTPATH}dot.png`),
   LOADER: require('../assets/lottie/loader.json'),
   MENU: require(`${DEFAULTPATH}dots.png`),
+  REPLAY: require(`${DEFAULTPATH}replay.png`),
 };

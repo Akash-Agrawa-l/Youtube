@@ -3,6 +3,7 @@ import localimages from './localimages';
 export const mediaJSON = [
   {
     id: 1,
+    duration: '9:56',
     uploadedAt: '1 hour ago',
     views: '1k views',
     description:
@@ -17,6 +18,7 @@ export const mediaJSON = [
   },
   {
     id: 2,
+    duration: '10:53',
     uploadedAt: '21 hours ago',
     views: '94k views',
     description: 'The first Blender Open Movie from 2006',
@@ -30,6 +32,7 @@ export const mediaJSON = [
   },
   {
     id: 3,
+    duration: '0:15',
     uploadedAt: '1 day ago',
     views: '800 views',
     description:
@@ -44,6 +47,7 @@ export const mediaJSON = [
   },
   {
     id: 4,
+    duration: '0:15',
     uploadedAt: '3 days ago',
     views: '100 views',
     description:
@@ -58,6 +62,7 @@ export const mediaJSON = [
   },
   {
     id: 5,
+    duration: '1:00',
     uploadedAt: '3 days ago',
     views: '21k views',
     description:
@@ -72,6 +77,7 @@ export const mediaJSON = [
   },
   {
     id: 6,
+    duration: '0:15',
     uploadedAt: '5 days ago',
     views: '6k views',
     description:
@@ -86,6 +92,7 @@ export const mediaJSON = [
   },
   {
     id: 7,
+    duration: '0:15',
     uploadedAt: '6 days ago',
     views: '7k views',
     description:
@@ -100,34 +107,37 @@ export const mediaJSON = [
   },
   {
     id: 8,
+    duration: '14:47',
     uploadedAt: '6 days ago',
     views: '86 views',
     description:
       'Sintel is an independently produced short film, initiated by the Blender Foundation as a means to further improve and validate the free/open source 3D creation suite Blender. With initial funding provided by 1000s of donations via the internet community, it has again proven to be a viable development model for both open 3D technology as for independent animation film.\nThis 15 minute film has been realized in the studio of the Amsterdam Blender Institute, by an international team of artists and developers. In addition to that, several crucial technical and creative targets have been realized online, by developers and artists and teams all over the world.\nwww.sintel.org',
     sources: [
-      'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
     ],
     subtitle: 'Blender Foundation',
     thumb:
-      'https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/images/Sintel.jpg',
     title: 'Sintel',
   },
   {
     id: 9,
+    duration: '9:54',
     uploadedAt: '8 days ago',
     views: '23k views',
     description:
       'Smoking Tire takes the all-new Subaru Outback to the highest point we can find in hopes our customer-appreciation Balloon Launch will get some free T-shirts into the hands of our viewers.',
     sources: [
-      'https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
     ],
     subtitle: 'Garage419',
     thumb:
-      'https://storage.googleapis.com/gtv-videos-bucket/sample/images/Sintel.jpg',
+      'https://storage.googleapis.com/gtv-videos-bucket/sample/images/SubaruOutbackOnStreetAndDirt.jpg',
     title: 'Subaru Outback On Street And Dirt',
   },
   {
     id: 10,
+    duration: '12:14',
     uploadedAt: '20 days ago',
     views: '20 views',
     description:
@@ -142,6 +152,7 @@ export const mediaJSON = [
   },
   {
     id: 11,
+    duration: '0:15',
     uploadedAt: '1 month ago',
     views: '1k views',
     description:
@@ -156,6 +167,7 @@ export const mediaJSON = [
   },
   {
     id: 12,
+    duration: '0:15',
     uploadedAt: '1 month ago',
     views: '9 views',
     description:
@@ -170,6 +182,7 @@ export const mediaJSON = [
   },
   {
     id: 13,
+    duration: '9:54',
     uploadedAt: '1 month ago',
     views: '4 views',
     description:
