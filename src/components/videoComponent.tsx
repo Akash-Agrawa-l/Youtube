@@ -49,6 +49,8 @@ const VideoComponent = ({source}: VideoProps) => {
     Orientation.addDeviceOrientationListener(orientation => {
       if (orientation === 'PORTRAIT') {
         setVideoStyle(styles.protraitStyle);
+      } else if (orientation === 'PORTRAIT-UPSIDEDOWN') {
+        setVideoStyle(styles.fullscreenStyle);
       } else {
         setVideoStyle(styles.fullscreenStyle);
         Orientation.unlockAllOrientations();
