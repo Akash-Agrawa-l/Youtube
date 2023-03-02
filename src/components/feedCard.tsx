@@ -36,7 +36,7 @@ const FeedCard = ({
       activeOpacity={0.9}
       style={styles.cardContainerStyle}>
       <View style={styles.imageContainer}>
-        {currentIndex === index && (
+        {currentIndex === index && source && (
           <Video
             source={{uri: source}}
             style={styles.videoStyle}
