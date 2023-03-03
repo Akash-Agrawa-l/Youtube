@@ -5,11 +5,13 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {mediaJSON} from '../../../utils/dummyData';
 import {normalize} from '../../../utils/dimensions';
 import FeedCard from '../../../components/feedCard';
-import {navigationRef} from '../../../utils/common';
+import {navigationRef, playRef} from '../../../utils/common';
 import {mediaJSONProps} from '../../../utils/modals';
 import screenNames from '../../../utils/screenNames';
+import {useIsFocused} from '@react-navigation/native';
 
 const Videos = () => {
+  const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const [page, setPage] = React.useState(1);
   const [data, getData] = React.useState<mediaJSONProps[] | []>([]);
@@ -18,8 +20,15 @@ const Videos = () => {
   React.useEffect(() => {
     setTimeout(() => {
       setCurrentIndex(0);
-    }, 6000);
+    }, 3500);
   }, []);
+
+  React.useEffect(() => {
+    if (isFocused) {
+      playRef?.current?.seek(0);
+      setCurrentIndex(null);
+    }
+  }, [isFocused]);
 
   const viewabilityConfig = {
     waitForInteraction: true,

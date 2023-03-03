@@ -190,7 +190,11 @@ const VideoComponent = ({source}: VideoProps) => {
    * @description on Back icon press
    */
   const handleBack = () => {
-    navigationRef?.current?.goBack();
+    if (isFullscreen) {
+      Orientation.lockToPortrait();
+    } else {
+      navigationRef?.current?.goBack();
+    }
   };
 
   /**

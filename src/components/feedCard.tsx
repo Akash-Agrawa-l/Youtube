@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Video from 'react-native-video';
-import {useIsFocused} from '@react-navigation/native';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import Shimmer from './shimmer';
@@ -24,11 +23,6 @@ const FeedCard = ({
   currentIndex,
 }: cardProps) => {
   const [isLoading, setIsLoading] = useState(true);
-  const isFocused = useIsFocused();
-
-  React.useEffect(() => {
-    isFocused && playRef?.current?.seek(0);
-  }, [isFocused]);
 
   const onLoadStart = () => {
     setIsLoading(true);
@@ -36,7 +30,7 @@ const FeedCard = ({
   const onLoadEnd = () => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3500);
+    }, 2500);
   };
   return (
     <TouchableOpacity
