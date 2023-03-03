@@ -26,7 +26,6 @@ const Videos = () => {
   React.useEffect(() => {
     if (isFocused) {
       playRef?.current?.seek(0);
-      setCurrentIndex(null);
     }
   }, [isFocused]);
 
