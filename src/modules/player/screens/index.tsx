@@ -9,7 +9,7 @@ import {
 import {useRoute} from '@react-navigation/native';
 import Orientation from 'react-native-orientation-locker';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import colors from '../../../utils/colors';
 import {mediaJSON} from '../../../utils/dummyData';
@@ -30,9 +30,11 @@ const PlayerScreen = () => {
     styles.statusBarPadding,
   );
   const flatlistRef = useRef<any>();
-  let media: mediaJSONProps[] = mediaJSON
-    .filter((item: mediaJSONProps) => item.id !== currentData.id)
-    .splice(0, 5);
+  let media: mediaJSONProps[] = useMemo(() => {
+    return mediaJSON
+      .filter((item: mediaJSONProps) => item.id !== currentData.id)
+      .splice(0, 5);
+  }, [currentData]);
 
   const isFullscreen: boolean = statusBarPadding === styles.noPadding;
 
