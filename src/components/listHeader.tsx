@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import Share from 'react-native-share';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
@@ -10,7 +10,11 @@ import localimages from '../utils/localimages';
 import {mediaJSONProps} from '../utils/modals';
 
 const ListHeader = ({data}: {data: mediaJSONProps}) => {
-  const renderReactions = () => {
+  /**
+   * @renderReactions Function
+   * @description returns the reactions and other responses for the video
+   */
+  const renderReactions = useCallback(() => {
     return reactions.map((item, index) => {
       const pressHandler = () => {
         if (item.text === 'Share') {
@@ -34,7 +38,8 @@ const ListHeader = ({data}: {data: mediaJSONProps}) => {
         </TouchableOpacity>
       );
     });
-  };
+  }, [data]);
+
   return (
     <React.Fragment>
       <View style={styles.detailsContainer}>
