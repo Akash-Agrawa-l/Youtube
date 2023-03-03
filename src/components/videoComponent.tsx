@@ -52,12 +52,10 @@ const VideoComponent = ({source}: VideoProps) => {
     Orientation.addDeviceOrientationListener(orientation => {
       if (orientation === 'PORTRAIT') {
         setVideoStyle(styles.protraitStyle);
-      } else if (orientation === 'PORTRAIT-UPSIDEDOWN') {
-        setVideoStyle(styles.fullscreenStyle);
       } else {
         setVideoStyle(styles.fullscreenStyle);
-        Orientation.unlockAllOrientations();
       }
+      Orientation.unlockAllOrientations();
     });
     return removeListeners;
   }, []);
@@ -201,7 +199,7 @@ const VideoComponent = ({source}: VideoProps) => {
    */
   const handleFullScreen = useCallback(() => {
     if (isFullscreen) {
-      Orientation.unlockAllOrientations();
+      Orientation.lockToPortrait();
       setVideoStyle(styles.protraitStyle);
     } else {
       Orientation.lockToLandscape();

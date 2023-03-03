@@ -30,14 +30,15 @@ const VideoControls = ({
   handleCurrentTime,
 }: controlProps) => {
   const [controls, showControls] = React.useState(true);
+  const [isfocused, setFocus] = React.useState(false);
 
   useEffect(() => {
-    if (controls) {
+    if (controls && !isfocused) {
       setTimeout(() => {
-        showControls(false);
+        !isfocused && showControls(false);
       }, 5000);
     }
-  }, [controls]);
+  }, [controls, isfocused]);
 
   /**
    * @toggleVisibility Function
@@ -45,6 +46,16 @@ const VideoControls = ({
    */
   const toggleVisibility = () => {
     showControls(!controls);
+  };
+
+  const _handleSeek = (value: number) => {
+    setFocus(true);
+    handleSeek(value);
+  };
+
+  const _handleCurrentTime = (value: number) => {
+    setFocus(false);
+    handleCurrentTime(value);
   };
   return (
     <React.Fragment>
@@ -98,8 +109,8 @@ const VideoControls = ({
               tapToSeek={true}
               thumbImage={localimages.DOT}
               step={1}
-              onValueChange={handleSeek}
-              onSlidingComplete={handleCurrentTime}
+              onValueChange={_handleSeek}
+              onSlidingComplete={_handleCurrentTime}
             />
             <View style={styles.bottomDetailsRow}>
               <Text style={styles.timeStamp}>{timeStamp}</Text>
