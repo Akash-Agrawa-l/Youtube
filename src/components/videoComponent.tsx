@@ -172,7 +172,7 @@ const VideoComponent = ({source}: VideoProps) => {
    * @getTime Function
    * @description returns time in hh/mm/ss and current Time / total duration format
    */
-  const getTime = useCallback(() => {
+  const getTime = useMemo(() => {
     return `${formatTime(currenttime)}/${formatTime(duration)}`;
   }, [currenttime]);
 
@@ -246,7 +246,7 @@ const VideoComponent = ({source}: VideoProps) => {
           handleSeek={handleSeek}
           handleCurrentTime={handleCurrentTime}
           handleFullScreen={handleFullScreen}
-          timeStamp={getTime()}
+          timeStamp={getTime}
           duration={duration}
           currenttime={currenttime}
           isFullscreen={isFullscreen}

@@ -32,7 +32,7 @@ const Videos = () => {
   const viewabilityConfig = {
     waitForInteraction: true,
     viewAreaCoveragePercentThreshold: 100,
-    minimumViewTime: 2500,
+    minimumViewTime: 2000,
   };
 
   const onViewableItemsChanged = useCallback(
@@ -85,7 +85,7 @@ const Videos = () => {
   return (
     <FlatList
       data={data}
-      contentContainerStyle={{paddingBottom: normalize(insets.bottom)}}
+      contentContainerStyle={{paddingBottom: normalize(insets.bottom + 15)}}
       keyExtractor={keyExtrat}
       renderItem={renderCard}
       bounces={false}
