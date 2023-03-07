@@ -28,9 +28,7 @@ const FeedCard = ({
     setIsLoading(true);
   };
   const onLoadEnd = () => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2500);
+    setIsLoading(false);
   };
   return (
     <TouchableOpacity
